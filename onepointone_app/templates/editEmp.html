@@ -1,0 +1,357 @@
+{% include "header.html" %}
+
+<script src="{{baseURL}}static/js/editemp.js"></script>
+<script src="{{baseURL}}static/js/jquery.min.js"></script>
+<!--<script src="{{baseURL}}static/js/jquery-1.10.2.js"></script>-->
+<script src="{{baseURL}}static/js/jquery-ui.min.js"></script>
+
+<link href = "{{baseURL}}static/css/jquery-ui.css" rel = "stylesheet">
+
+
+<script src="{{baseURL}}static/admin/dist/js/multiselect-bundle.min.js"></script>
+
+{% if messages %}
+	{% for message in messages %}
+	   <script>alert("{{ message }}")</script>
+	{% endfor %}
+{% endif %}
+
+<style>
+    .btn-info:hover {
+    color: #fff;
+    background-color: black;
+    border-color: black;
+}
+
+.btn-info {
+    color: #fff;
+    background-color: black;
+    border-color: black;
+}
+
+.btn-info:focus, .btn-info.focus {
+    box-shadow: 0 0 0 0.2rem white;
+}
+
+.d-lg-block {
+    display: inline-block!important;
+}
+#downloadcsv{
+   color:#fff;
+}
+.mob_errorr  {
+                width:250px;
+                height:20px;
+                height:auto;
+                position:fixed;
+                left:42%;
+                margin-left:-100px;
+                bottom:50px;
+                background-color: #383838;
+                color: #F0F0F0;
+                font-family: Calibri;
+                font-size: 16px;
+                padding:10px;
+                text-align:center;
+                border-radius: 2px;
+                -webkit-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+                -moz-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+                box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+            }
+
+            .MainDiv{
+                /*padding-bottom: 20px;*/
+            }
+
+            .FieldHeading{
+                font-size: 16px;
+                margin-bottom: 10px;
+            }
+
+            .field{
+                /*width: 100%;*/
+                /*    padding: 12px;
+                    font-size: 16px;*/
+
+                    padding: 5px;
+                    font-size: 14px;
+                    width: 60%;
+            }
+            .tableDataWidth{
+                width: 50%;
+                vertical-align: initial;
+            }
+
+            #loading {
+  position: fixed;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  text-align: center;
+  opacity: 0.7;
+  background-color: #fff;
+  z-index: 99;
+}
+
+#loading-image {
+   position: absolute;
+    left: 50%;
+    top: 45%;
+    z-index: 100;
+    height: 45px;
+    width: 45px;
+}
+
+.content{
+    background-color:white;
+    padding: 20px 0px 20px 30px;
+    border-radius:9px;
+}
+
+@media (max-width: 767px) {
+    .content{
+        padding: 10px 10px 10px 10px;
+
+    }
+
+    .MainDiv{
+        margin-top: 25px !important;
+    }
+}
+
+</style>
+
+
+ <script>
+            $(function () {
+        //      $("#datepicker").datepicker();
+                $('#datepicker').datepicker({
+                    dateFormat: 'dd-mm-yy'
+                });
+            });
+
+           function myFunction() {
+              var employee_name = document.getElementById("employee_name").value;
+              console.log(employee_name);
+
+              var mobile_number = document.getElementById("mobile_number").value;
+              console.log(mobile_number);
+
+              var mail = document.getElementById("mail").value;
+              console.log(mail);
+
+              var address = document.getElementById("address").value;
+              console.log(address);
+
+              var mariatal_status = document.getElementById("mariatal_status").value;
+              console.log(mariatal_status);
+
+              var designation = document.getElementById("designation").value;
+              console.log(designation);
+
+              var experience = document.getElementById("experience").value;
+              console.log(experience);
+
+              var rights = document.getElementById("rights").value;
+              console.log(rights);
+
+
+
+
+button = document.querySelector('button');
+datalist = document.querySelector('datalist');
+select = document.querySelector('select');
+options = select.options;
+
+/* on arrow button click, show/hide the DDL*/
+button.addEventListener('click', toggle_ddl);
+
+function toggle_ddl() {
+  if (datalist.style.display === '') {
+    datalist.style.display = 'block';
+    this.textContent = "▲";
+    /* If input already has a value, select that option from DDL */
+    var val = input.value;
+    for (var i = 0; i < options.length; i++) {
+      if (options[i].text === val) {
+        select.selectedIndex = i;
+        break;
+      }
+    }
+  } else hide_select();
+}
+
+/* when user selects an option from DDL, write it to text field */
+select.addEventListener('change', fill_input);
+
+function fill_input() {
+  input.value = options[this.selectedIndex].value;
+  hide_select();
+}
+
+/* when user wants to type in text field, hide DDL */
+input = document.querySelector('input');
+input.addEventListener('focus', hide_select);
+
+function hide_select() {
+  datalist.style.display = '';
+  button.textContent = "▼";
+}
+
+ </script>
+
+<div id="loading">
+  <img id="loading-image" src="{{baseURL}}static/images/loading.gif" alt="Loading..." />
+</div>
+
+<div class="container" style="padding-top: 50px;">
+        <div class="content">
+
+            <div class="container">
+                {% csrf_token %}
+               <form method="post">
+                    <div class="row">
+                    <div class="col-lg-4" style="">
+                        <div class="MainDiv" style="margin-top:30px">
+                            <p class="FieldHeading">Employee Name *</p>
+                            <!--<input type="text" id="elaborate_feedback" placeholder="Enter your answer">-->
+                            <input type="hidden" id="unique_id" class="field" value="{{id}}">
+                            <input id="employee_name" name="employee_name" class="field" value="{{emp_name}}" style="width:300px;">
+                        </div>
+                    </div>
+                    <div class="col-lg-4" style="">
+                        <div class="MainDiv" style="margin-top:30px">
+                            <p class="FieldHeading">Date Of Birth</p>
+                            <input id="dob"  value="{{dob}}" style="width:300px;">
+                        </div>
+
+                    </div>
+                    <div class="col-lg-4" style="">
+                        <div class="MainDiv" style="margin-top:30px">
+                            <p class="FieldHeading">Joining Date *</p>
+                            <input id="join_date" class="field" value="{{join_date}}" style="width:300px;">
+                        </div>
+                    </div>
+                    <div class="col-lg-4" style="">
+                        <div class="MainDiv" style="margin-top:30px">
+                            <p class="FieldHeading">Select Gender *</p>
+                            {% if gender == 'Male' %}
+                                <input type="radio" name="gender" value="Male" style="vertical-align: middle;" checked>
+                                <label >Male</label>
+                                <input type="radio" name="gender" value="Female" style="vertical-align: middle;">
+                                <label >Female</label>
+                            {% else %}
+                                <input type="radio" name="gender" value="Male">
+                                <label >Male</label>
+                                <input type="radio" name="gender" value="Female" checked>
+                                <label >Female</label>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-lg-4" style="">
+                         <div class="MainDiv" style="margin-top:30px">
+                            <p class="FieldHeading">Designation</p>
+                            <input type="text"  id="designation" value="{{designation}}" style="width:300px;">
+                        </div>
+                    </div>
+                    <div class="col-lg-4" style="">
+                        <div class="MainDiv" style="margin-top:30px">
+                            <p class="FieldHeading">Manager*</p>
+                            <select name="shift" id="rights" required   class="field"  style="width:300px;">
+                                <option value="{{rights}}">{{rights}}</option>
+                                {% if rights == "yes"%}
+                                    <option value="no">No</option>
+                                {% else %}
+                                    <option value="yes">Yes</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4" style="">
+                        <div class="MainDiv" style="margin-top:30px"    >
+                            <p class="FieldHeading">Profile Pic</p>
+                            <input type="file" id="attachment" class="field" value="{{pic}}">
+                        </div>
+                    </div>
+<!--                    <div class="col-lg-4" style="">-->
+<!--                        <div class="MainDiv">-->
+<!--                            <p class="FieldHeading">Mobile Number</p>-->
+<!--                            <input type="text"  required  placeholder="Enter your Number" maxlength="10" id="mobile_number" class="field" style="width:300px;">-->
+<!--                        </div>-->
+
+<!--                    </div>-->
+                    <div class="col-lg-4" style="">
+                        <div class="MainDiv" style="margin-top:30px">
+                            <p class="FieldHeading">Password *</p>
+                            <!--<input type="text" id="elaborate_feedback" placeholder="Enter your answer">-->
+                            <input id="password" value="{{password}}" style="width:300px;">
+                        </div>
+                    </div>
+                    <div class="col-lg-4" style="">
+                        <div class="MainDiv" style="margin-top:30px">
+                            <p class="FieldHeading">Email Address</p>
+                            <input type="text"  id="mail" value="{{mail}}" style="width:300px;">
+                        </div>
+                    </div>
+
+                    <br> <br> <br> <br>
+
+<!--                    <div class="col-lg-4" style="">-->
+<!--                        <div class="MainDiv" style="margin-top:30px">-->
+<!--                            <p class="FieldHeading">Status *</p>-->
+<!--                            <select name="mariatal_status" id="mariatal_status"  required class="field" style="width:300px;">-->
+<!--                                    <option value="">Select your Status</option>-->
+<!--                                    <option value="Married">Married</option>-->
+<!--                                    <option value="Un-Married">Un-Married</option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+
+<!--                    <br> <br> <br> <br>-->
+
+
+<!--                    <div class="col-lg-4" style="">-->
+<!--                        <div class="MainDiv" style="margin-top:30px">-->
+<!--                            <p class="FieldHeading">Experience *</p>-->
+<!--                            <select name="experience" id="experience" required class="field"   style="width:300px;">-->
+<!--                                    <option value="">Select your Experience</option>-->
+<!--                                    <option value="fresher">Fresher</option>-->
+<!--                                    <option value="One Year">1 year</option>-->
+<!--                                    <option value="Two Year">2 year</option>-->
+<!--                                <option value="Three Year">3 year</option>-->
+<!--                                <option value="Four Year">4 year</option>-->
+<!--                                <option value="Five Year">5+ year</option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+
+<!--                    </div>-->
+<!--                    <br> <br> <br> <br>-->
+
+<!--                    <br> <br> <br> <br>-->
+
+
+<!--                    <br> <br> <br> <br>-->
+                    <div class="col">
+                        <div class="MainDiv" style=" text-align: center; margin-top:40px; ">
+<!--                           <input type="submit" value="Submit" onclick="validateForm()" style="padding: 10px 15px;color: white;background: #052b60;font-size: 15px;border-radius: 6px;border: none; width:200px;cursor:pointer;">-->
+                            <input type="button" value="Update" onclick="validateForm()" style="cursor: pointer;padding: 10px 15px;color: white;background: #052b60;font-size: 15px;border-radius: 6px;border: none; width:200px; ">
+                        </div>
+                    </div>
+
+                </div>
+
+
+               </form>
+            </div>
+        </div>
+    </div>
+
+<script>
+  $(window).on('load', function () {
+    $('#loading').hide();
+  })
+</script>

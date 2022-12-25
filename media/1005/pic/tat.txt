@@ -1,0 +1,118 @@
+@csrf_exempt
+def tatReport(request):
+    if request.method == 'GET':
+        print('in get req------ tatrepo')
+        cursor = connection.cursor()
+        currentdatetime=datetime.now()
+
+        from_date=request.GET.get('from_date')
+        to_date=request.GET.get('to_date')
+
+        print('====================')
+        print(from_date,to_date)
+
+        status=['Waiting for Information','Hold']
+        resolverGroups=['1001','1002','1003']
+
+        list_cols = ['Ticket Number',
+                     'User','Hold',
+                     'HR Operation','Tech Support','Administration','Total']
+
+        mainls = []
+
+        query_tickets=f"SELECT DISTINCT ticketNumber FROM ticket"
+        cursor.execute(query_tickets)
+        tickets = cursor.fetchall()
+        print('tickets-------->', tickets)
+
+        if len(tickets)>0:
+            for i in tickets:
+                ticketNumber=i[0]
+
+                ls=[]
+                ls.append(ticketNumber)
+                print(ls)
+                total = []
+                x = timedelta(days=0, hours=0, minutes=0, seconds=0)
+
+                for stat in status:
+                    # query_status=f"SELECT Status,updatedTime,DateTime " \
+                    #              f"from ticketstatehistory where ticketNumber='{str(ticketNumber)}' and Status='{str(stat)}'" \
+                    #              f"CAST(DateTime AS DATE) BETWEEN '{str(from_date)}' AND '{str(to_date)}'" \
+                    #              f"GROUP BY Status"
+                    query_status = f"SELECT Status,updatedTime,DateTime from ticketstatehistory where CAST(DateTime AS DATE) BETWEEN '{str(from_date)}' AND '{str(to_date)}' and" \
+                                   f" ticketNumber='{ticketNumber}'and Status='{stat}'" \
+                                   f" GROUP BY STATUS"
+                    print('query_resolver------->', query_status)
+                    cursor.execute(query_status)
+                    output_status = cursor.fetchone()
+                    print('output_status-------->', output_status)
+
+                    statusDiff=''
+
+                    if output_status==None:
+                        output_status=''
+                    else:
+                        updatedStatus=output_status[1]
+                        insertedStatus=output_status[2]
+                        print('updatedStatus+++++++++',updatedStatus,type(updatedStatus))
+                        print('insertedStatus+++++++++',insertedStatus,type(insertedStatus))
+
+                        if updatedStatus==None:
+                            updatedStatus=currentdatetime
+                            print('======================',updatedStatus,type(updatedStatus))
+
+                        statusDiff=updatedStatus-insertedStatus
+
+                    ls.append(statusDiff)
+                    total.append(statusDiff)
+
+                for r in resolverGroups:
+                    query_resolver = f"SELECT resolver_group_id,updatedTime,DateTime " \
+                                     f"from ticketstatehistory where CAST(DateTime AS DATE) BETWEEN '{str(from_date)}' AND '{str(to_date)}' and ticketNumber='{str(ticketNumber)}' and resolver_group_id='{str(r)}' " \
+                                     f"GROUP BY resolver_group_id"
+                    print('query_resolver------->', query_resolver)
+                    cursor.execute(query_resolver)
+                    output_resolver = cursor.fetchone()
+                    print('output_resolver-------->', output_resolver)
+
+                    resolverDiff=''
+
+                    if output_resolver==None:
+                        output_resolver=''
+                    else:
+                        updatedResolver = output_resolver[1]
+                        insertedResolver = output_resolver[2]
+                        print('updatedResolver+++++++++', updatedResolver, type(updatedResolver))
+                        print('insertedResolver+++++++++', insertedResolver, type(insertedResolver))
+
+                        if updatedResolver == None:
+                            updatedResolver = currentdatetime
+                            print('======================', updatedResolver, type(updatedResolver))
+
+                        resolverDiff = updatedResolver-insertedResolver
+                        print('resolverDiff----------->',resolverDiff)
+
+                    ls.append(resolverDiff)
+                    if resolverDiff!='':
+                        total.append(resolverDiff)
+
+                print('hrs---------------+++++++++++++++++', total)
+
+                for i in total:
+                    if i!='':
+                        x+=i
+                print('x===============>',x)
+                ls.append(x)
+                mainls.append(tuple(ls))
+
+        print('x===============>', mainls)
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment;filename="TAT.csv"'
+        writer = csv.writer(response)
+
+        writer.writerow(list_cols)
+
+        for data in mainls:
+            writer.writerow(data)
+        return response

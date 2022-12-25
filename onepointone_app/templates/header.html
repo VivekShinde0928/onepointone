@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{baseURL}}static/css/style.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="{{baseURL}}static/admin/node_modules/toast-master/css/jquery.toast.css" rel="stylesheet">
+
+
+
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{{baseURL}}static/images/MicrosoftTeams-image (12).png">
+    <title>OnePointOne</title>
+    <!-- This page CSS -->
+    <!-- chartist CSS -->
+    <link href="{{baseURL}}static/admin/node_modules/morrisjs/morris.css" rel="stylesheet">
+    <!--Toaster Popup message CSS -->
+    <link href="{{baseURL}}static/admin/node_modules/toast-master/css/jquery.toast.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{{baseURL}}static/admin/dist/css/style.min.css" rel="stylesheet">
+    <link href="{{baseURL}}static/admin/dist/css/style.css" rel="stylesheet">
+</head>
+<style>
+        .skin-red .topbar {
+            background: #ef4828;
+        }
+
+        .page-wrapper, .footer {
+            margin-left: 265px;
+        }
+
+        .left-sidebar{
+            width:265px;
+            background: white;
+        }
+
+        .navbar-header {
+            width: 265px;
+        }
+
+        /* logout-btn */
+        .logout-btn{
+            text-decoration: none;
+            color: #fff;
+            padding: 5px 10px;
+        }
+
+        .logout-btn:hover{
+            background:white;
+            color: #000;
+        }
+
+        .client-info{
+            color: #fff;
+            margin: 0 30px;
+
+        }
+
+        .navbar-nav{
+            align-items: center;
+        }
+
+       
+
+
+
+</style>
+<body>
+
+<!-- nav start -->
+<div id="body" class="skin-red fixed-layout">
+    <div id="main-wrapper">
+        <header class="topbar">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                <div class="navbar-collapse">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item"> <a class="nav-link nav-toggler d-block d-sm-none waves-effect waves-dark d-none" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+                        <!-- <li class="nav-item" style="margin-left: 12px;">
+                            <form class="app-search d-none d-md-block d-lg-block" style="color: white;font-size: 20px;">
+                            One Point One
+                            </form>
+                        </li> -->
+
+                        <li class="nav-item" style="margin-left: 25px; color: #fff;">
+                           
+                            One Point One
+                           
+                        </li>
+
+                    </ul>
+                
+                    <ul class="navbar-nav my-lg-0" style="padding-right: 20px;">
+                        <span class="client-info">Welcome, {{name}}</span>
+                        <a href="{{baseURL}}logout" type="button" class="logout-btn"  style="text-align: center;"><i class="fa fa-power-off"></i> Logout</a>
+                       
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+<div class="modal fade"  id="profile_model" tabindex="-1" role="dialog">
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+
+                                        <button type="button" class="close" id="btn"data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                          <center>
+                                            {%if profile != '' %}
+                                            <img style="height:150px; width:150px;" src="https://mgenius.in/MobitrailPMS/Image/Profile_thumb/{{profile}}" class="imgcontainer">
+                                            {%else%}
+                                            <img style="height:150px; width:150px;" src="{{baseURL}}static/images/user.png" class="imgcontainer">
+                                            {%endif%}
+                                          </center>
+                                          <hr>
+                                          <p>{{name}} ({{adid}})</p>
+                                          <p>Email- {{email}}</p>
+                                          <p>Type- {{role}}</p>
+                                          {%if role == 'Engineer'%}<p>Resolver Group - {{resolver_name}} </p>{%endif%}
+                                          <p>Mobile no -{{mobile}}</p>
+                                      </div>
+                                      <div class="modal-footer">
+<!--                                        <button type="button" class="btn btn-primary">Save changes</button>-->
+<!--                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <footer class="footer d-none">
+            © 2022 Powered by OnePointOne
+        </footer>
+        <!-- ============================================================== -->
+        <!-- End footer -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="{{baseURL}}static/admin/node_modules/jquery/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap popper Core JavaScript -->
+    <script src="{{baseURL}}static/admin/node_modules/popper/popper.min.js"></script>
+    <script src="{{baseURL}}static/admin/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="{{baseURL}}static/admin/dist/js/perfect-scrollbar.jquery.min.js"></script>
+    <!--Wave Effects -->
+    <script src="{{baseURL}}static/admin/dist/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="{{baseURL}}static/admin/dist/js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="{{baseURL}}static/admin/dist/js/custom.min.js"></script>
+    <!-- ============================================================== -->
+    <!-- This page plugins -->
+    <!-- ============================================================== -->
+    <!--morris JavaScript -->
+    <script src="{{baseURL}}static/admin/node_modules/raphael/raphael-min.js"></script>
+    <script src="{{baseURL}}static/admin/node_modules/morrisjs/morris.min.js"></script>
+    <script src="{{baseURL}}static/admin/node_modules/jquery-sparkline/jquery.sparkline.min.js"></script>
+    <!-- Popup message jquery -->
+<!--    <script src="{{baseURL}}static/admin/node_modules/toast-master/js/jquery.toast.js"></script>-->
+    <!-- Chart JS -->
+    <script src="{{baseURL}}static/admin/dist/js/dashboard1.js"></script>
+<!--    <script src="{{baseURL}}static/admin/node_modules/toast-master/js/jquery.toast.js"></script>-->
+
+ <!--    datatables-->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+
+<!--<script>-->
+
+<!--    function submit_ticket1(){-->
+
+<!--        ticketNumber=$('#ticketNumber').val();-->
+<!--        //alert(ticketNumber);-->
+
+<!--        var project_name=ticketNumber.split('-')[0];-->
+<!--        //alert(project_name);-->
+
+<!--alert('{{baseURL}}superE/serviceRequest?project='+project_name+'&ticketNumber='+ticketNumber);-->
+
+<!--        location.href='http://127.0.0.1:8000/superE/serviceRequest?project=SR&ticketNumber=SR-000005';-->
+<!--        return false;-->
+
+
+<!--        }-->
+<!--</script>-->
+
+
+<script>
+
+    function sidemenu(){
+        if (document.getElementById("body").classList.contains('mini-sidebar')) {
+            //alert('if');
+            var open='true';
+          //  alert(open);
+        }
+        else{
+           // alert('else');
+            var open='false';
+            //alert(open);
+        }
+            localStorage.setItem('isSidenavOpen',open);
+
+            var url = window.location.href;
+            //alert(url);
+
+            if(document.location.search.length) {
+                // query string exists
+                //alert(`${url}&sidemenu=${open}`);
+                location.href=`${url}&sidemenu=${open}`;
+            }
+            else {
+                // no query string exists
+                //alert(`${url}&sidemenu=${open}`);
+                location.href=`${url}?sidemenu=${open}`;
+            }
+    }
+</script>
+
+<script>
+
+    function submit_ticket1(){
+
+        ticketNumber=$('#ticketNumber').val();
+       //alert(ticketNumber);
+
+        var project_name=ticketNumber.split('-')[0];
+       // alert(project_name);
+
+        current_href=window.location.href;
+       // alert(current_href);
+
+       // alert(`href for ticket search---------->`+`{{baseURL}}superE/serviceRequest?project=${project_name}&ticketNumber=${ticketNumber}`);
+
+         //location.href=`{{baseURL}}superE/serviceRequest?project=${project_name}&ticketNumber=${ticketNumber}`;
+
+        //alert(`{{baseURL}}superE/serviceRequest?project=${project_name}&ticketNumber=${ticketNumber}`);
+         //location.href=`https://9698-111-91-30-75.ngrok.io/superE/serviceRequest?project=${project_name}&ticketNumber=${ticketNumber}`;
+         //location.href=`https://9698-111-91-30-75.ngrok.io/superE/serviceRequest?project=${project_name}&ticketNumber=${ticketNumber}`;
+
+         $.ajax({
+            url:'{{baseURL}}superE/serviceRequest',
+            type:'GET',
+            data:{
+                    'project':project_name,
+                    'ticketNumber':ticketNumber,
+            },
+             beforeSend: function() {
+                    $("#ticket-form").prop('disabled', true);
+            },
+            success:function(response){
+                //alert('success');
+
+	//alert(`{{baseURL}}superE/serviceRequest?project=${project_name}&ticketNumber=${ticketNumber}`);
+    window.location=`{{baseURL}}superE/serviceRequest?project=${project_name}&ticketNumber=${ticketNumber}`;
+ //window.location=`{{baseURL}}listView?project=${project_name}&ticketNumber=${ticketNumber}`;
+
+
+//<!--    current_href+`&ticketNumber=${ticketNumber}`;-->
+            },
+            complete:function(){},
+            error:function(xhr,textStatus,thrownError){}
+        });
+
+        }
+
+        //alert('{{baseURL}}superE/serviceRequest?project='+project_name+'&ticketNumber='+ticketNumber);
+
+
+
+
+</script>
+
+
+
+</div>
+    <!-- nav ends -->
+
+<section class="d-flex justify-content-between mt-2 mx-3 main">
+        <div class="mt-2 mx-3">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" display="none" aria-hidden="true" width="0" height="0" hidden>
+                <defs>
+                  <symbol id="sprite-close" viewBox="0 0 24 24">
+                    <title>Remove chip</title>
+                    <path d="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,15.59L13.41,12L17,8.41L15.59,7Z" />
+                  </symbol>
+                </defs>
+              </svg>
+
+
+        </div>
+
+</section>
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="{{baseURL}}static/admin/node_modules/jquery/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap popper Core JavaScript -->
+    <script src="{{baseURL}}static/admin/node_modules/popper/popper.min.js"></script>
+    <script src="{{baseURL}}static/admin/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="{{baseURL}}static/admin/dist/js/perfect-scrollbar.jquery.min.js"></script>
+    <!--Wave Effects -->
+    <script src="{{baseURL}}static/admin/dist/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="{{baseURL}}static/admin/dist/js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="{{baseURL}}static/admin/dist/js/custom.min.js"></script>
+    <!-- ============================================================== -->
+    <!-- This page plugins -->
+    <!-- ============================================================== -->
+    <!--morris JavaScript -->
+    <script src="{{baseURL}}static/admin/node_modules/raphael/raphael-min.js"></script>
+    <script src="{{baseURL}}static/admin/node_modules/morrisjs/morris.min.js"></script>
+    <script src="{{baseURL}}static/admin/node_modules/jquery-sparkline/jquery.sparkline.min.js"></script>
+    <!-- Popup message jquery -->
+<!--    <script src="{{baseURL}}static/admin/node_modules/toast-master/js/jquery.toast.js"></script>-->
+    <!-- Chart JS -->
+    <script src="{{baseURL}}static/admin/dist/js/dashboard1.js"></script>
+<!--    <script src="{{baseURL}}static/admin/node_modules/toast-master/js/jquery.toast.js"></script>-->
+
+ <!--    datatables-->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+
+<!--<script>-->
+
+<!--    function submit_ticket1(){-->
+
+<!--        ticketNumber=$('#ticketNumber').val();-->
+<!--        //alert(ticketNumber);-->
+
+<!--        var project_name=ticketNumber.split('-')[0];-->
+<!--        //alert(project_name);-->
+
+<!--alert('{{baseURL}}superE/serviceRequest?project='+project_name+'&ticketNumber='+ticketNumber);-->
+
+<!--        location.href='http://127.0.0.1:8000/superE/serviceRequest?project=SR&ticketNumber=SR-000005';-->
+<!--        return false;-->
+
+
+<!--        }-->
+<!--</script>-->
+
+
+<script>
+
+    function sidemenu(){
+        if (document.getElementById("body").classList.contains('mini-sidebar')) {
+            //alert('if');
+            var open='true';
+          //  alert(open);
+        }
+        else{
+           // alert('else');
+            var open='false';
+            //alert(open);
+        }
+            localStorage.setItem('isSidenavOpen',open);
+
+            var url = window.location.href;
+            //alert(url);
+
+            if(document.location.search.length) {
+                // query string exists
+                //alert(`${url}&sidemenu=${open}`);
+                location.href=`${url}&sidemenu=${open}`;
+            }
+            else {
+                // no query string exists
+                //alert(`${url}&sidemenu=${open}`);
+                location.href=`${url}?sidemenu=${open}`;
+            }
+    }
+</script>
+
+<script>
+
+    function submit_ticket1(){
+
+        ticketNumber=$('#ticketNumber').val();
+       //alert(ticketNumber);
+
+        var project_name=ticketNumber.split('-')[0];
+       // alert(project_name);
+
+        current_href=window.location.href;
+       // alert(current_href);
+
+       // alert(`href for ticket search---------->`+`{{baseURL}}superE/serviceRequest?project=${project_name}&ticketNumber=${ticketNumber}`);
+
+         //location.href=`{{baseURL}}superE/serviceRequest?project=${project_name}&ticketNumber=${ticketNumber}`;
+
+        //alert(`{{baseURL}}superE/serviceRequest?project=${project_name}&ticketNumber=${ticketNumber}`);
+         //location.href=`https://9698-111-91-30-75.ngrok.io/superE/serviceRequest?project=${project_name}&ticketNumber=${ticketNumber}`;
+         //location.href=`https://9698-111-91-30-75.ngrok.io/superE/serviceRequest?project=${project_name}&ticketNumber=${ticketNumber}`;
+
+         $.ajax({
+            url:'{{baseURL}}superE/serviceRequest',
+            type:'GET',
+            data:{
+                    'project':project_name,
+                    'ticketNumber':ticketNumber,
+            },
+             beforeSend: function() {
+                    $("#ticket-form").prop('disabled', true);
+            },
+            success:function(response){
+                //alert('success');
+
+	//alert(`{{baseURL}}superE/serviceRequest?project=${project_name}&ticketNumber=${ticketNumber}`);
+    window.location=`{{baseURL}}superE/serviceRequest?project=${project_name}&ticketNumber=${ticketNumber}`;
+ //window.location=`{{baseURL}}listView?project=${project_name}&ticketNumber=${ticketNumber}`;
+
+
+//<!--    current_href+`&ticketNumber=${ticketNumber}`;-->
+            },
+            complete:function(){},
+            error:function(xhr,textStatus,thrownError){}
+        });
+
+        }
+
+        //alert('{{baseURL}}superE/serviceRequest?project='+project_name+'&ticketNumber='+ticketNumber);
+
+
+
+
+</script>
+
+
+<script src="{{baseURL}}static/admin/node_modules/jquery/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap popper Core JavaScript -->
+    <script src="{{baseURL}}static/admin/node_modules/popper/popper.min.js"></script>
+    <script src="{{baseURL}}static/admin/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="{{baseURL}}static/admin/dist/js/perfect-scrollbar.jquery.min.js"></script>
+    <!--Wave Effects -->
+    <script src="{{baseURL}}static/admin/dist/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="{{baseURL}}static/admin/dist/js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="{{baseURL}}static/admin/dist/js/custom.min.js"></script>
+    <!-- ============================================================== -->
+    <!-- This page plugins -->
+    <!-- ============================================================== -->
+    <!--morris JavaScript -->
+    <script src="{{baseURL}}static/admin/node_modules/raphael/raphael-min.js"></script>
+    <script src="{{baseURL}}static/admin/node_modules/morrisjs/morris.min.js"></script>
+    <script src="{{baseURL}}static/admin/node_modules/jquery-sparkline/jquery.sparkline.min.js"></script>
+    <!-- Popup message jquery -->
+<!--    <script src="{{baseURL}}static/admin/node_modules/toast-master/js/jquery.toast.js"></script>-->
+    <!-- Chart JS -->
+<!--    <script src="{{baseURL}}static/admin/dist/js/dashboard1.js"></script>-->
+
+</body>
+</html>

@@ -1,0 +1,149 @@
+{% include "header.html" %}
+<!--<script src="{{baseURL}}static/js/jquery.min.js"></script>-->
+<!--<script src="{{baseURL}}static/js/jquery-1.10.2.js"></script>-->
+<!--<script src="{{baseURL}}static/js/jquery-ui.min.js"></script>-->
+
+<!--<link href = "{{baseURL}}static/css/jquery-ui.css" rel = "stylesheet">-->
+<script src="{{baseURL}}static/admin/dist/js/multiselect-bundle.min.js"></script>
+<script src="{{baseURL}}static/js/addemp.js"></script>
+
+{% if messages %}
+	{% for message in messages %}
+	   <script>alert("{{ message }}")</script>
+	{% endfor %}
+{% endif %}
+
+    <div class="container-fluid" style="padding-top: 50px;">
+        <div style="background-color:white; padding:20px; border-radius:9px;">
+
+            <div class="container">
+                {% csrf_token %}
+               <form method="post">
+                    <div class="row">
+                    <div class="col-lg-4" style="">
+                        <div class="MainDiv">
+                            <p class="FieldHeading">Employee Name *</p>
+                            <!--<input type="text" id="elaborate_feedback" placeholder="Enter your answer">-->
+                            <input id="employee_name" name="employee_name" rows="1" cols="30" placeholder="Please Enter Name" class="field" required="" style="width:300px;">
+                        </div>
+                    </div>
+                    <div class="col-lg-4" style="">
+                        <div class="MainDiv" style="margin-top:30px">
+                            <p class="FieldHeading">Date Of Birth</p>
+                            <input id="dob" required class="field" placeholder="Enter your DOB" type="date" style="width:300px;">
+                        </div>
+
+                    </div>
+                    <div class="col-lg-4" style="">
+                        <div class="MainDiv" style="margin-top:30px">
+                            <p class="FieldHeading">Joining Date *</p>
+                            <input id="join_date" type="date" required class="field" name="begin" placeholder="dd/mm/yyyy" value="" min="1901-01-01" max="2030-01-01" style="width:300px;">
+                        </div>
+
+                    </div>
+                    <div class="col-lg-4" style="">
+                        <div class="MainDiv" style="margin-top:30px">
+                            <p class="FieldHeading">Gender *</p>
+                            <input type="radio" id="male" name="gender" value="Male" required>
+                            <label for="male">Male</label>
+                            <input type="radio" id="female" name="gender" value="Female">
+                            <label for="female">Female</label>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-4" style="">
+                         <div class="MainDiv" style="margin-top:30px">
+                            <p class="FieldHeading">Designation</p>
+                            <input type="text" required placeholder="Enter your Designstion"  id="designation" class="field" style="width:300px;">
+                        </div>
+                    </div>
+                    <div class="col-lg-4" style="">
+                        <div class="MainDiv" style="margin-top:30px">
+                            <p class="FieldHeading">Manager*</p>
+                            <select name="shift" id="rights" required   class="field"  style="width:300px;">
+                                <option value="">Select your type</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4" style="">
+                        <div class="MainDiv" style="margin-top:30px"    >
+                            <p class="FieldHeading">Profile Pic</p>
+                            <input type="file" id="attachment" class="field">
+                        </div>
+                    </div>
+<!--                    <div class="col-lg-4" style="">-->
+<!--                        <div class="MainDiv">-->
+<!--                            <p class="FieldHeading">Mobile Number</p>-->
+<!--                            <input type="text"  required  placeholder="Enter your Number" maxlength="10" id="mobile_number" class="field" style="width:300px;">-->
+<!--                        </div>-->
+
+<!--                    </div>-->
+                    <div class="col-lg-4" style="">
+                        <div class="MainDiv">
+                            <p class="FieldHeading">Password *</p>
+                            <!--<input type="text" id="elaborate_feedback" placeholder="Enter your answer">-->
+                            <input id="password" name="employee_name" rows="1" cols="30" placeholder="Please Enter password" class="field" required="" style="width:300px;">
+                        </div>
+                    </div>
+                    <div class="col-lg-4" style="">
+                        <div class="MainDiv">
+                            <p class="FieldHeading">Email Address</p>
+                            <input type="text" required placeholder="Email id"  id="mail" class="field" style="width:300px;">
+                        </div>
+                    </div>
+
+                    <br> <br> <br> <br>
+
+<!--                    <div class="col-lg-4" style="">-->
+<!--                        <div class="MainDiv" style="margin-top:30px">-->
+<!--                            <p class="FieldHeading">Status *</p>-->
+<!--                            <select name="mariatal_status" id="mariatal_status"  required class="field" style="width:300px;">-->
+<!--                                    <option value="">Select your Status</option>-->
+<!--                                    <option value="Married">Married</option>-->
+<!--                                    <option value="Un-Married">Un-Married</option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+
+<!--                    <br> <br> <br> <br>-->
+
+
+<!--                    <div class="col-lg-4" style="">-->
+<!--                        <div class="MainDiv" style="margin-top:30px">-->
+<!--                            <p class="FieldHeading">Experience *</p>-->
+<!--                            <select name="experience" id="experience" required class="field"   style="width:300px;">-->
+<!--                                    <option value="">Select your Experience</option>-->
+<!--                                    <option value="fresher">Fresher</option>-->
+<!--                                    <option value="One Year">1 year</option>-->
+<!--                                    <option value="Two Year">2 year</option>-->
+<!--                                <option value="Three Year">3 year</option>-->
+<!--                                <option value="Four Year">4 year</option>-->
+<!--                                <option value="Five Year">5+ year</option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+
+<!--                    </div>-->
+<!--                    <br> <br> <br> <br>-->
+
+<!--                    <br> <br> <br> <br>-->
+
+
+<!--                    <br> <br> <br> <br>-->
+                    <div class="col">
+                        <div class="MainDiv" style=" text-align: center; margin-top:40px; ">
+                           <input type="submit" value="Submit" onclick="validateForm()" style="padding: 10px 15px;color: white;background: #052b60;font-size: 15px;border-radius: 6px;border: none; width:200px;cursor:pointer;">
+                        </div>
+                    </div>
+
+                </div>
+
+
+               </form>
+            </div>
+        </div>
+    </div>
